@@ -1,3 +1,38 @@
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: User authentication middleware
+ */
+
+/**
+ * @swagger
+ * /api/authenticate:
+ *   get:
+ *     summary: Test authentication middleware
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Authentication successful
+ *       401:
+ *         description: Unauthorized - No token provided or invalid token
+ *       403:
+ *         description: Forbidden - Invalid token
+ */
+
 const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
