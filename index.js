@@ -7,6 +7,7 @@ dotenv.config();
 
 
 const registerRouter = require("./routes/register");
+const logiRouter = require("./routes/login");
 
 
 
@@ -30,6 +31,7 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
   app.use(express.json())
   app.use(registerRouter);
+  app.use(logiRouter);
 
 
 app.get('/test', (req,res) => {
