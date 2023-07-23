@@ -18,7 +18,10 @@ router.post("/register", async (req, res) => {
         role 
     });
     await user.save()
-    res.status(201).json("User Created Successfully");
+   res.status(201).json({
+    massage:"User Created Sucussfully",
+    user:user
+   })
 });
 
 module.exports = router;
