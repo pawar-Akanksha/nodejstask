@@ -76,6 +76,29 @@ router.get("/products", authenticate, async (req, res) => {
 });
 
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Name of the product
+ *         category:
+ *           type: string
+ *           description: Category of the product
+ *         price:
+ *           type: number
+ *           description: Price of the product
+ *       required:
+ *         - name
+ *         - category
+ *         - price
+ */
+
 /**
  * @swagger
  * /products:
@@ -101,21 +124,35 @@ router.get("/products", authenticate, async (req, res) => {
  *                 message:
  *                   type: string
  *                   description: Success message
- *                 CreatedProduct:
+ *                 createdProduct:
  *                   $ref: '#/components/schemas/Product'
  *       401:
  *         description: Unauthorized
  *       403:
  *         description: Forbidden
  */
-router.post("/products",[authenticate, authorize(["admin"])], async (req, res) => {
+router.post("/products", [authenticate, authorize(["admin"])], async (req, res) => {
     const product = new Product(req.body);
     const createdProduct = await product.save();
     res.status(201).json({
-        message: "Product Created Successfully", 
-        CreatedProduct: createdProduct})
-  }
-);
+      message: "Product Created Successfully",
+      createdProduct: createdProduct,
+    });
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @swagger

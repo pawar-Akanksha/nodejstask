@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 
 const registerRouter = require("./routes/register");
 const logiRouter = require("./routes/login");
@@ -36,6 +39,35 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
   app.use(logiRouter);
   app.use(customerRouter);
   app.use(productRouter);
+
+
+
+
+// Define Swagger options
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'My Awesome API',
+      version: '1.0.0',
+      description: 'This is an example API that demonstrates how to use Swagger documentation in an Express.js application.',
+    },
+    servers: [
+      {
+        url: `http://localhost:${port}`, 
+      },
+    ],
+    
+  },
+  // Specify the path to your route files with Swagger annotations
+  apis: ['./routes/*.js','./middleware/*.js'], // This assumes your route files are in the 'routes' folder and have a '.js' extension
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Serve Swagger UI at /api-docs endpoint
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 
 app.get('/test', (req,res) => {
